@@ -1,0 +1,56 @@
+@page
+@model wt_lab5_5razor_denisyuk.Pages.Books.CreateModel
+@{
+    ViewData["Title"] = "Добавление книги";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <!-- Адаптивная сетка: на мобильных форма на всю ширину, на ПК - половина -->
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm rounded-4 border-0">
+                <div class="card-body p-4">
+                    <h2 class="mb-4 text-center fw-bold text-primary">Новая книга</h2>
+                    
+                    <form method="post">
+                        <div class="mb-3">
+                            <label asp-for="NewBook.Title" class="form-label fw-bold">Название</label>
+                            <input asp-for="NewBook.Title" class="form-control" />
+                            <!-- Сообщение об ошибке для названия -->
+                            <span asp-validation-for="NewBook.Title" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="NewBook.Author" class="form-label fw-bold">Автор</label>
+                            <input asp-for="NewBook.Author" class="form-control" />
+                            <span asp-validation-for="NewBook.Author" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="NewBook.Year" class="form-label fw-bold">Год издания</label>
+                            <input asp-for="NewBook.Year" class="form-control" type="number" />
+                            <span asp-validation-for="NewBook.Year" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-check mb-4">
+                            <input asp-for="NewBook.IsAvailable" class="form-check-input" />
+                            <label asp-for="NewBook.IsAvailable" class="form-check-label">Доступна для выдачи</label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <!-- Кнопка сохранения -->
+                            <button type="submit" class="btn btn-primary rounded-pill fw-bold">Сохранить книгу</button>
+                            <!-- Ссылка "Назад" -->
+                            <a asp-page="/Books/Index" class="btn btn-outline-secondary rounded-pill">Назад к каталогу</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Обязательный блок для работы клиентской валидации -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

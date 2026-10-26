@@ -1,0 +1,74 @@
+@page
+@model wt_lab5_5razor_denisyuk.Pages.Books.IndexModel
+@{
+    ViewData["Title"] = "Каталог книг";
+}
+
+<style>
+    body {
+        background-color: #f4f7f6; /* Светлый фон страницы */
+    }
+    .card {
+        background-color: #ffffff;
+        transition: transform 0.2s, box-shadow 0.2s; /* Плавная анимация */
+    }
+    .card:hover {
+        transform: translateY(-5px); /* Поднятие при наведении */
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+</style>
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div>
+            <h1 class="fw-bold text-dark">Наша Библиотека</h1>
+            <p class="text-secondary mb-0">Всего книг в фонде: <span class="fw-bold">@Model.Books.Count</span></p>
+        </div>
+        <a asp-page="/Books/Create" class="btn btn-success rounded-pill px-4 shadow-sm">+ Добавить книгу</a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var book in Model.Books)
+        {
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 position-relative overflow-hidden d-flex flex-column">
+                    <!-- Цветная полоса слева (индикатор статуса) -->
+                    <div class="position-absolute top-0 start-0 h-100" style="width: 6px; background-color: @(book.IsAvailable ? "#198754" : "#dc3545");"></div>
+                    
+                    <div class="card-body ps-4 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-muted small">ID: @book.Id</span>
+                            @if (book.IsAvailable)
+                            {
+                                <span class="badge rounded-pill bg-success bg-opacity-25 text-success border border-success">В наличии</span>
+                            }
+                            else
+                            {
+                                <span class="badge rounded-pill bg-danger bg-opacity-25 text-danger border border-danger">Выдана</span>
+                            }
+                        </div>
+                        
+                        <h4 class="card-title fw-bold text-dark mb-3">@book.Title</h4>
+                        
+                        <div class="mb-3">
+                            <p class="mb-1 text-secondary">Автор: @book.Author</p>
+                            <p class="mb-0 text-secondary">Год: @book.Year г.</p>
+                        </div>
+                        
+                        <!-- Блок с кнопками внизу карточки (прижат к низу благодаря mt-auto) -->
+                        <div class="mt-auto pt-3 border-top">
+                            <a asp-page="/Books/Details" asp-route-id="@book.Id" class="btn btn-outline-primary w-100 fw-bold rounded-pill mb-2">Подробнее о книге</a>
+                            
+                            <!-- Форма для удаления -->
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@book.Id" class="d-grid">
+                                <button type="submit" class="btn btn-outline-danger rounded-pill" onclick="return confirm('Вы уверены, что хотите удалить эту книгу?');">
+                                    Удалить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

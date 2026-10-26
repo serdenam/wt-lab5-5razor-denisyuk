@@ -1,0 +1,33 @@
+@page
+@model wt_lab5_5razor_denisyuk.Pages.Books.DetailsModel
+@{
+    ViewData["Title"] = "Информация о книге";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-sm rounded-4 border-0">
+                <div class="card-body p-4">
+                    <h2 class="fw-bold text-primary mb-3">@Model.CurrentBook?.Title</h2>
+                    <hr />
+                    <p><strong>ID:</strong> @Model.CurrentBook?.Id</p>
+                    <p><strong>Автор:</strong> @Model.CurrentBook?.Author</p>
+                    <p><strong>Год издания:</strong> @Model.CurrentBook?.Year</p>
+                    <p><strong>Статус:</strong> 
+                        @if (Model.CurrentBook?.IsAvailable == true)
+                        {
+                            <span class="badge bg-success">Доступна для выдачи</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Выдана читателю</span>
+                        }
+                    </p>
+                    
+                    <a asp-page="/Books/Index" class="btn btn-outline-secondary rounded-pill mt-3">Назад к списку</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
